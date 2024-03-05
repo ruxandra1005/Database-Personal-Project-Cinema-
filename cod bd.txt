@@ -1,0 +1,337 @@
+-- Baza de date pentru COLOCVIU --
+
+-- Ajuta la re-crearea tabelelor (cand deja exista) -- 
+
+DROP TABLE distributie;
+DROP TABLE film;
+DROP TABLE studio;
+DROP TABLE persoana;
+
+-----------------------------------------------
+CREATE TABLE persoana (
+    id_persoana     INTEGER PRIMARY KEY ,
+    nume            VARCHAR2(50) NOT NULL,
+    adresa          VARCHAR2(50) NOT NULL,
+    email           VARCHAR2(30),
+    sex             CHAR(1) NOT NULL,
+    data_nasterii   DATE NOT NULL,
+    castig_net      DECIMAL(15,2) NOT NULL,
+    moneda          VARCHAR(10) NOT NULL
+);
+
+CREATE TABLE studio (
+    nume          VARCHAR2(50) PRIMARY KEY,
+    adresa        VARCHAR2(50) NOT NULL,
+    id_presedinte INTEGER NOT NULL,
+    FOREIGN KEY (id_presedinte) REFERENCES persoana(id_persoana)
+);
+
+CREATE TABLE film (
+    titlu     VARCHAR(50), 
+    an        INTEGER NOT NULL,
+    durata    INTEGER NOT NULL,
+    gen       VARCHAR2(10) NOT NULL,
+    studio    VARCHAR(30) NOT NULL,
+    id_producator INTEGER NOT NULL,
+    PRIMARY KEY (titlu, an),
+    FOREIGN KEY (id_producator) REFERENCES persoana(id_persoana)
+);
+
+CREATE TABLE distributie (
+    titlu_film     VARCHAR2(50) NOT NULL,
+    an_film        INTEGER NOT NULL,
+    id_actor       INTEGER NOT NULL,
+    FOREIGN KEY (titlu_film, an_film) REFERENCES film(titlu, an),
+    FOREIGN KEY (id_actor) REFERENCES persoana(id_persoana)
+);
+
+--PERSOANA
+
+INSERT INTO persoana (id_persoana, nume, adresa, email, sex, data_nasterii, castig_net, moneda) 
+VALUES (1, 'Al Pacino', 'US', 'alpacino@actor.com', 'M', TO_DATE('1940-04-25', 'YYYY-MM-DD'), 1100000.00, 'USD');
+INSERT INTO persoana (id_persoana, nume, adresa, email, sex, data_nasterii, castig_net, moneda) 
+VALUES (2, 'Elijah Wood', 'US', 'elijahwood@actor.com', 'M', TO_DATE('1981-01-28', 'YYYY-MM-DD'), 50000.00, 'USD');
+INSERT INTO persoana (id_persoana, nume, adresa, email, sex, data_nasterii, castig_net, moneda)
+VALUES (3, 'Patton Oswalt', 'US', 'patoswalt@actor.com', 'M', TO_DATE('1969-01-27', 'YYYY-MM-DD'), 200000.00, 'USD');
+INSERT INTO persoana (id_persoana, nume, adresa, email, sex, data_nasterii, castig_net, moneda)
+VALUES (4, 'Amy Poehler', 'US' , 'amypoehler@actor.com', 'F', TO_DATE('1971-09-16', 'YYYY-MM-DD'), 20000.00, 'USD');
+INSERT INTO persoana (id_persoana, nume, adresa, email, sex, data_nasterii, castig_net, moneda)
+VALUES (5, 'Tom Hanks', 'US', 'tomhanks@actor.com', 'M', TO_DATE('1956-07-09', 'YYYY-MM-DD'), 300000.00, 'USD');
+INSERT INTO persoana (id_persoana, nume, adresa, email, sex, data_nasterii, castig_net, moneda)
+VALUES (6, 'Sam Worhington', 'UK', 'samworth@actor.com', 'M', TO_DATE('1976-10-02', 'YYYY-MM-DD'), 10000.00, 'LIRAS');
+INSERT INTO persoana (id_persoana, nume, adresa, email, sex, data_nasterii, castig_net, moneda)
+VALUES (7, 'Harrison Ford', 'US', 'harrisonford@actor.com', 'M', TO_DATE('1942-07-13', 'YYYY-MM-DD'), 300000.00, 'USD');
+INSERT INTO persoana (id_persoana, nume, adresa, email, sex, data_nasterii, castig_net, moneda)
+VALUES (8, 'Matt Damon', 'US', 'mattdamon@actor.com', 'M', TO_DATE('1970-10-8', 'YYYY-MM-DD'), 200000.00, 'USD');
+INSERT INTO persoana (id_persoana, nume, adresa, email, sex, data_nasterii, castig_net, moneda)
+VALUES (9, 'Reese Witherspoon', 'US', 'reesewith@actor.com', 'F', TO_DATE('1976-03-22', 'YYYY-MM-DD'), 100000.00, 'USD');
+INSERT INTO persoana (id_persoana, nume, adresa, email, sex, data_nasterii, castig_net, moneda)
+VALUES (10, 'Marlon Wayans', 'US', 'marlonwayans@actor.com', 'M', TO_DATE('1972-07-23', 'YYYY-MM-DD'), 80000.00, 'USD');
+INSERT INTO persoana (id_persoana, nume, adresa, email, sex, data_nasterii, castig_net, moneda)
+VALUES (111, 'Jason Biggs', 'US', 'jasonbiggs@actor.com', 'M', TO_DATE('1978-05-12', 'YYYY-MM-DD'), 30000.00, 'USD');
+INSERT INTO persoana (id_persoana, nume, adresa, email, sex, data_nasterii, castig_net, moneda)
+VALUES (11, 'Hal B. Wallis', 'US', NULL, 'M',  TO_DATE('1898-10-19', 'YYYY-MM-DD'), 199289.00, 'USD');
+INSERT INTO persoana (id_persoana, nume, adresa, email, sex, data_nasterii, castig_net, moneda)
+VALUES (12, 'Bill Hader', 'US', 'billhader@actor.com', 'M', TO_DATE('1978-06-07', 'YYYY-MM-DD'), 200000.00, 'USD');
+INSERT INTO persoana (id_persoana, nume, adresa, email, sex, data_nasterii, castig_net, moneda)
+VALUES (13, 'Zoë Yadira Saldaña-Perego', 'US', 'zoe@actor.com', 'F', TO_DATE('1978-06-19', 'YYYY-MM-DD'), 400000.00, 'USD');
+INSERT INTO persoana (id_persoana, nume, adresa, email, sex, data_nasterii, castig_net, moneda)
+VALUES (14, 'Francis Ford Coppola', 'US', 'ffcoppola@prod.com', 'M', TO_DATE('1939-04-07', 'YYYY-MM-DD'), 838392.00, 'RON'); 
+INSERT INTO persoana (id_persoana, nume, adresa, email, sex, data_nasterii, castig_net, moneda)
+VALUES (15, 'Peter Jackson', 'New Zeeland', 'peterjack@prod.com', 'M', TO_DATE('1961-10-31', 'YYYY-MM-DD'), 6292992.00, 'EUR');
+INSERT INTO persoana (id_persoana, nume, adresa, email, sex, data_nasterii, castig_net, moneda)
+VALUES (16, 'Graham King', 'US', 'graham@prod.com', 'M', TO_DATE('1973-09-26', 'YYYY-MM-DD'), 99400382.00, 'USD'); 
+INSERT INTO persoana (id_persoana, nume, adresa, email, sex, data_nasterii, castig_net, moneda)
+VALUES (17, 'Chris Moore', 'US', 'chris@prod.com', 'M', TO_DATE('1981-04-22', 'YYYY-MM-DD'), 38448932.00, 'USD'); 
+INSERT INTO persoana (id_persoana, nume, adresa, email, sex, data_nasterii, castig_net, moneda)
+VALUES (18, 'Ann Sarnoff', 'US', 'annsarnoff@pres.com', 'F', TO_DATE('1981-05-12', 'YYYY-MM-DD'), 383564632.00, 'USD'); 
+INSERT INTO persoana (id_persoana, nume, adresa, email, sex, data_nasterii, castig_net, moneda)
+VALUES (19, 'Peter Levinsohn', 'US', 'peter@pres.com', 'M', TO_DATE('1971-06-12', 'YYYY-MM-DD'), 13433222.00, 'USD' ); 
+INSERT INTO persoana (id_persoana, nume, adresa, email, sex, data_nasterii, castig_net, moneda)
+VALUES (31, 'Emma Watts', 'US', 'emmawatts@pres.com', 'F', TO_DATE('1971-06-12', 'YYYY-MM-DD'), 292983992.00 , 'EUR'); 
+INSERT INTO persoana (id_persoana, nume, adresa, email, sex, data_nasterii, castig_net, moneda)
+VALUES (41, 'Rami Malek', 'US', 'rami@actor.com', 'M', TO_DATE('1981-05-12', 'YYYY-MM-DD'), 83930920.00 , 'USD'); 
+INSERT INTO persoana (id_persoana, nume, adresa, email, sex, data_nasterii, castig_net, moneda)
+VALUES (22, 'Humphrey Bogart', 'US', NULL, 'M', TO_DATE('1899-12-25', 'YYYY-MM-DD'), 928890.00, 'USD');
+
+--STUDIO
+
+INSERT INTO studio (nume, adresa, id_presedinte)
+VALUES ('Paramount Pictures', 'Los Angeles', 1);
+INSERT INTO studio (nume, adresa, id_presedinte)
+VALUES ('New Line Cinema', 'New York', 2);
+INSERT INTO studio (nume, adresa, id_presedinte)
+VALUES ('Walt Disney Pictures', 'California', 3);
+INSERT INTO studio (nume, adresa, id_presedinte)
+VALUES ('Ligthstorm Entertainment' , 'California', 4);
+INSERT INTO studio (nume, adresa, id_presedinte)
+VALUES ('Lucasfilm Ltd', 'San Fracncisco', 5);
+INSERT INTO studio (nume, adresa, id_presedinte)
+VALUES ('Scott Free Production', 'London', 6);
+INSERT INTO studio (nume, adresa, id_presedinte)
+VALUES ('Type A Films', 'California', 7);
+INSERT INTO studio (nume, adresa, id_presedinte)
+VALUES ('Colombia Pictures', 'New York', 8);
+INSERT INTO studio (nume, adresa, id_presedinte)
+VALUES ('Universal Pictures', 'California', 19);
+INSERT INTO studio (nume, adresa, id_presedinte)
+VALUES ('HBO Entertainment', 'New York', 10);
+INSERT INTO studio (nume, adresa, id_presedinte)
+VALUES ('Warner Bros', 'California', 18);
+INSERT INTO studio (nume, adresa, id_presedinte)
+VALUES ('20th Centry Fox', 'Los Angeles', 31);
+
+--FILM
+
+INSERT INTO film (titlu, an, durata, gen, studio, id_producator) 
+VALUES ('The Godfather' , 1972, 175, 'drama', 'Paramount Pictures', 14);
+INSERT INTO film (titlu, an, durata, gen, studio, id_producator) 
+VALUES ('The Lord of the Rings', 2001, 78, 'drama', 'New Line Cinema', 15);
+INSERT INTO film (titlu, an, durata, gen, studio, id_producator)
+VALUES ('The Godfather' , 1974, 202, 'drama' , 'Paramount Pictures', 14);
+INSERT INTO film (titlu, an, durata, gen, studio, id_producator) 
+VALUES ('Ratatouille' , 2007 , 111 , 'copii' , 'Walt Disney Pictures' , 3);
+INSERT INTO film (titlu, an, durata, gen, studio, id_producator) 
+VALUES ('Inside Out' , 2015 , 95 , 'copii' , 'Walt Disney Pictures' , 3);
+INSERT INTO film (titlu, an, durata, gen, studio, id_producator) 
+VALUES ('Pinocchio', 2022 , 105, 'copii', 'Walt Disney Pictures', 3);
+INSERT INTO film (titlu, an, durata, gen, studio, id_producator) 
+VALUES ('Avatar: The Way of Water' , 2022 , 192 , 'SF', 'Lightstorm Entertainment' , 4);
+INSERT INTO film (titlu, an, durata, gen, studio, id_producator) 
+VALUES ('Star Wars' , 1977 , 121 , 'SF', 'Lucasfilm Ltd' , 5);
+INSERT INTO film (titlu, an, durata, gen, studio, id_producator) 
+VALUES ('The Martian', 2015, 141 , 'SF', 'Scott Free Productions', 6);
+INSERT INTO film (titlu, an, durata, gen, studio, id_producator) 
+VALUES ('Legally Blonde', 2001, 96 , 'comedie', 'Type A Films', 7);
+INSERT INTO film (titlu, an, durata, gen, studio, id_producator) 
+VALUES ('White Chicks', 2004, 109, 'comedie', 'Colombia Pictures', 8);
+INSERT INTO film (titlu, an, durata, gen, studio, id_producator) 
+VALUES ('American Pie', 1999, 95, 'comedie', 'Universal Pictures', 17);
+INSERT INTO film (titlu, an, durata, gen, studio, id_producator) 
+VALUES ('Barry', 2018, 35, 'drama', 'HBO Entertainment', 10);
+INSERT INTO film (titlu, an, durata, gen, studio, id_producator) 
+VALUES ('Bohemian Rhapsody', 2018, 135, 'drama', '20th Century Fox', 16);
+
+--DISTRIBUTIE
+
+INSERT INTO distributie (titlu_film, an_film, id_actor) 
+VALUES ('The Godfather', 1972, 1); 
+--Al Pacino--
+INSERT INTO distributie (titlu_film, an_film, id_actor)
+VALUES ('The Godfather', 1974, 1); 
+--Al Pacino--
+INSERT INTO distributie (titlu_film, an_film, id_actor) 
+VALUES ('The Lord of the Rings', 2001, 2);
+--Elijah Wood--
+INSERT INTO distributie (titlu_film, an_film, id_actor) 
+VALUES ('Ratatouille', 2007, 3); 
+--Patton Oswalt--
+INSERT INTO distributie (titlu_film, an_film, id_actor) 
+VALUES ('Inside Out', 2015, 4); 
+--Amy Poehler--
+INSERT INTO distributie (titlu_film, an_film, id_actor) 
+VALUES ('Pinocchio', 2022, 5); 
+--Tom Hanks--
+INSERT INTO distributie (titlu_film, an_film, id_actor) 
+VALUES ('Avatar: The Way of Water', 2022, 6); 
+--Sam Worthington--
+INSERT INTO distributie (titlu_film, an_film, id_actor) 
+VALUES ('Avatar: The Way of Water', 2022, 13); 
+--Zoe Saldana
+INSERT INTO distributie (titlu_film, an_film, id_actor)
+VALUES ('Star Wars', 1977, 7); 
+--Harrison Ford--
+INSERT INTO distributie (titlu_film, an_film, id_actor) 
+VALUES ('The Martian', 2015, 8); 
+--Matt Damon--
+INSERT INTO distributie (titlu_film, an_film, id_actor)
+VALUES ('Legally Blonde', 2001, 9);
+--Reese Witherspoon--
+INSERT INTO distributie (titlu_film, an_film, id_actor) 
+VALUES ('White Chicks', 2004, 10); 
+--Marlon Wayans--
+INSERT INTO distributie (titlu_film, an_film, id_actor)
+VALUES ('American Pie', 1999, 111); 
+--Jason Biggs--
+INSERT INTO distributie (titlu_film, an_film, id_actor)
+VALUES ('Barry', 2018, 12);
+--Bill Hader
+INSERT INTO distributie (titlu_film, an_film, id_actor)
+VALUES ('Bohemian Rhapsody', 2018, 41);
+--Rami Malek
+
+--stergere coloana email din tabelul Persoana
+    
+    ALTER TABLE persoana DROP COLUMN email;
+    
+    ALTER TABLE film ADD CONSTRAINT film_gen_ck CHECK (
+        gen IN ('drama' , 'comedie' , 'SF', 'copii')
+    );
+    
+    ALTER TABLE persoana ADD CONSTRAINT pers_sex_ck CHECK (
+        sex IN ('M' , 'F')
+    );
+    
+    
+-- 08.02. a) setare durata film intre 10 si 300 (min) --
+
+    ALTER TABLE film ADD CONSTRAINT film_durata_ck CHECK (durata BETWEEN 10 AND 300);
+    
+-- 08.02. b) daca numele studioului contine 'UK' atunci adresa studioului trebuie sa contina 'London' --
+
+   ALTER TABLE studio ADD CONSTRAINT studio_check CHECK (
+       (nume LIKE '%UK%' AND adresa LIKE '%London%') OR (nume NOT LIKE '%UK%')
+   );
+    
+-- 08.03. a) sa se gaseasca detaliile filmelor pentru copii ordonate cresactor dupa an si titlu --
+
+    SELECT * 
+    FROM film
+    WHERE gen = 'copii'
+    ORDER BY an, titlu;
+    
+-- 08.03 b) sa se gaseasca detaliile persoanelor cu castig_net > 1000000 USD
+
+    SELECT *
+    FROM persoana
+    WHERE castig_net > 1000000 AND moneda = 'USD';
+
+-- 08.04 a) sa se afiseze detaliile studioului și producătorului ce au produs filmul ‘Barry’ 2018
+   
+    SELECT s.nume, s.adresa, s.id_presedinte, f.id_producator
+    FROM studio s JOIN film f  ON s.nume = f.studio
+    WHERE f.titlu = 'Barry';
+    
+-- 08.04 b) Care sunt perechile (id_actor, id_actor2) de actori de sex diferit ce au jucat în același film? O pereche este unică în rezultat.
+
+    SELECT DISTINCT a.id_actor , b.id_actor
+    FROM distributie a 
+    JOIN distributie b ON a.titlu_film = b.titlu_film AND a.an_film = b.an_film 
+    JOIN persoana p1 ON a.id_actor = p1.id_persoana
+    JOIN persoana p2 ON b.id_actor = p2.id_persoana
+    WHERE p1.sex <> p2.sex;
+
+-- 08.05 a) Să se găsească numele actriței cel mai puțin plătită.
+
+    SELECT p.nume
+    FROM persoana p
+    WHERE p.sex = 'F' AND p.id_persoana IN (
+    SELECT d.id_actor
+    FROM distributie d JOIN persoana p2 ON d.id_actor = p2.id_persoana)
+    ORDER BY p.castig_net;
+
+-- 08.05 b) Să se găsească titlul, anul și durata filmelor cu durata mai mare decât durata filmului ‘Bohemian Rhapsody’, 2018.
+   
+   SELECT titlu, an, durata
+    FROM film
+    WHERE durata > (
+    SELECT durata
+    FROM Film
+    WHERE titlu = 'Bohemian Rhapsody' AND an = 2018
+    );
+
+-- 08.06 a)  Să se găsească pentru fiecare producător câte filme de gen ‘SF’ a produs.
+
+    SELECT p.nume AS NumeProducator, COUNT(*) AS NumarFilmeSF
+    FROM film f
+    JOIN persoana p ON f.id_producator = p.id_persoana
+    WHERE f.gen = 'SF'
+    GROUP BY p.nume;
+
+-- 08.06 b) Să se găsească câștigul minim și câștigul maxim pentru președinții de studiouri. 
+
+    SELECT 
+    MIN(p.castig_net) AS CastigMinim,
+    MAX(p.castig_net) AS CastigMaxim
+    FROM 
+    studio s
+    JOIN 
+    persoana p ON s.id_presedinte = p.id_persoana;
+
+-- 08.07 a) Să se adauge filmul ‘The Maltese Falcon’ (Șoimul maltez) din 1941, 100 minute, gen 
+--‘drama‘, id_producator 11 (‘Hal B. Wallis‘), studioul ‘Warner Bros.‘ și unul din actorii
+--distribuiți, id_actor 22 (‘Humphrey Bogart’). (se presupune că producătorul, actorul și 
+--studioul există deja în baza de date)
+
+INSERT INTO film (titlu, an, durata, gen, studio, id_producator) 
+VALUES ('The Maltese Falcon', 1941, 100, 'drama', 'Warner Bros', 11);
+
+-- 08.07 b) Să se şteargă distribuția filmelor care au producător persoana cu id_persoana = 17
+
+DELETE FROM distributie
+WHERE titlu_film IN (
+    SELECT titlu
+    FROM film
+    WHERE id_producator = 17
+);
+
+-- 08.07 c) Să se modifice câștigul net al persoanelor care au moneda RON pentru a reflecta faptul 
+-- că nu mai este exprimat în RON ci în EUR (la rata de schimb 1 EUR = 4,75 RON)
+
+    UPDATE persoana
+    SET castig_net = castig_net * 4.75,
+    moneda = 'EUR'
+    WHERE moneda = 'RON';
+
+-- 08.09 a) A asigura la ștergerea din Distribuție a unui actor, câștigul net al actorului scade cu 2%
+
+CREATE TRIGGER scadereprocentaj
+AFTER DELETE 
+ON distributie
+BEGIN
+UPDATE persoana
+SET castig_net = castig_net * 0.98 -- scadem 2% din câștigul net
+WHERE id_persoana IN (SELECT id_actor FROM deleted);
+END;
+   
+-- 08.09 b) b) Presupunând vederea: 
+
+CREATE VIEW FilmecopiiDisney AS 
+SELECT titlu, an, gen, durata, nume as producator
+FROM Filme, Persoana
+WHERE id_persoana = id_producator
+ studio = ‘Disney’ AND
+ gen = ‘copii’;
+   
+--Să se definească un trigger instead-of pentru a permite adăugare prin această vedere.
+--(pot exista mai multe filme din genul ‘copii’ produse de studioul ‘Disney’)
